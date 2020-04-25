@@ -1,0 +1,31 @@
+import time
+
+import Adafruit_CharLCD as LCD
+
+
+# Raspberry Pi pin configuration:
+lcd_rs        = 7  # Note this might need to be changed to 21 for older revision Pi's.
+lcd_en        = 8
+lcd_d4        = 25
+lcd_d5        = 24
+lcd_d6        = 23
+lcd_d7        = 18
+lcd_backlight = 1
+
+lcd_columns = 16
+lcd_rows    = 2
+
+seconds = time.time()
+
+lcd = LCD.Adafruit_CharLCD(lcd_rs, lcd_en, lcd_d4, lcd_d5, lcd_d6, lcd_d7,
+                           lcd_columns, lcd_rows, lcd_backlight)
+
+local_time = time.ctime(seconds)
+print("Local time:", local_time)
+lcd.message('Current Time\n'+str(local_time))
+time.reload(1)
+while True:
+	lcd.set_backlight(0)
+	time.sleep(0.5)
+	lcd.set_backlight(1)
+	time.sleep(0.5)
